@@ -1,3 +1,7 @@
+import './Tile.css';
+import BookmarkFilled from '../../assets/icon-bookmark-full.svg';
+import Bookmark from '../../assets/icon-bookmark-empty.svg';
+
 export default function Tile({
     title,
     year,
@@ -7,35 +11,63 @@ export default function Tile({
     isBookmarked,
     isTrending
   }) {
-	return (
-		<div className="w-52">
-            <div className="tile-wrapper">
-                <div className="tile-image">
-                    <img className="w-full h-full" src={thumbnail?.regular?.large} alt="Movie Poster" />
+    const trendingTile = () => {
+        return (
+            <div data-trending="true" className="tile-wrapper relative text-white rounded-md">
+                <img className="h-full absolute" src={thumbnail?.large} alt="Movie Poster" />
+                <div className="gradient h-full w-full absolute top-0 left-0"></div>
+                <div className="bookmark-wrapper m-4 p-2 rounded-full absolute top-0 right-0">
+                    <img className="bookmark flex" src={isBookmarked ? BookmarkFilled.src : Bookmark.src} alt="Bookmark" />
                 </div>
-                <div className="tile-content">
+                <div className="tile-content absolute bottom-0 mb-4 ml-4">
+                    <div className="flex gap-2 text-xs">
+                        <div>
+                            <span>{year}</span>
+                        </div>
+                        <div>
+                            <span>{category}</span>
+                        </div>
+                        <div>
+                            <span>{rating}</span>
+                        </div>
+                    </div>
                     <div className="tile-title">
-                        <div className="tile-title-text">
-                            <p className="text-white text-lg font-semibold">{title}</p>
-                        </div>
-                        <div className="tile-title-year">
-                            <p className="text-white text-sm font-semibold">{year}</p>
-                        </div>
-                    </div>
-                    <div className="tile-category">
-                        <p className="text-white text-sm font-semibold">{category}</p>
-                    </div>
-                    <div className="tile-rating">
-                        <p className="text-white text-sm font-semibold">{rating}</p>
-                    </div>
-                    <div className="tile-bookmark">
-                        <p className="text-white text-sm font-semibold">{isBookmarked}</p>
-                    </div>
-                    <div className="tile-trending">
-                        <p className="text-white text-sm font-semibold">{isTrending}</p>
+                        <span>{title}</span>
                     </div>
                 </div>
             </div>
-		</div>
-	)
+        )
+    }
+
+    const regularTile = () => {
+        return (
+            <div data-trending="false" className="tile-wrapper relative text-white rounded-md flex-col w-full">
+                <div className="mb-2 thumbnail overflow-hidden rounded-md relative w-full">
+                    <img className="absolute movie-poster" src={thumbnail?.large} alt="Movie Poster" />
+                    <div className="bookmark-wrapper m-4 p-2 rounded-full absolute top-0 right-0">
+                        <img className="bookmark flex" src={isBookmarked ? BookmarkFilled.src : Bookmark.src} alt="Bookmark" />
+                    </div>
+                </div>
+                
+                <div className="tile-content">
+                    <div className="flex gap-2 text-xs">
+                        <div>
+                            <span>{year}</span>
+                        </div>
+                        <div>
+                            <span>{category}</span>
+                        </div>
+                        <div>
+                            <span>{rating}</span>
+                        </div>
+                    </div>
+                    <div className="tile-title text-md">
+                        <span>{title}</span>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    return isTrending ? trendingTile() : regularTile();
 }

@@ -4,3 +4,26 @@ input {
     border: none;
     color: white;
 }
+
+.search-icon {
+    color: white;
+    transition: all 0.3s;
+}
+
+[data-inputactive="false"] .search-icon {
+    transform: scale(1.0);
+}
+[data-inputactive="true"] .search-icon {
+    transform: scale(1.1);
+}
+
+.search-input {
+    transition: all 0.1s;
+    border-bottom: 1px solid #10141E;
+}
+[data-inputactive="false"] .search-input {
+    border-color: #10141E;
+}
+[data-inputactive="true"] .search-input {
+    border-color: #5A698F;
+}

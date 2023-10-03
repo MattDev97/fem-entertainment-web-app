@@ -1,8 +1,9 @@
 import './globals.css'
 import type { Metadata } from 'next'
-
 import SideNav from "./components/SideNav/SideNav";
-import SearchBar from "./components/SearchBar/SearchBar";
+import { SearchClientLayout } from './components/SearchClientLayout/SearchClientLayout';
+
+
 
 export const metadata: Metadata = {
 	title: 'Mattflix',
@@ -10,28 +11,23 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
-	children,
+	children
 }: {
-	children: React.ReactNode
+	children: React.ReactNode;
 }) {
 	return (
 		<html lang="en">
-			<body className="bg-base-100 min-h-screen">
+			<body className="bg-base-100 min-h-screen font-outfit">
 				<main className="max-w-6xl mx-auto ">
-				<div className="h-full flex gap-5 mt-6">
-					<div className="flex">
-						<SideNav />
-					</div>
-					<div className="flex flex-col">
-						<div className="h-fit py-4">
-							<SearchBar />
+					<div className="h-full flex flex-wrap mt-6">
+						<div className="flex lg:w-1/12 w-full lg:h-full">
+							<SideNav />
 						</div>
-						<div>
-							{children}
+						<div className="flex flex-col lg:w-11/12 w-full">
+							<SearchClientLayout>{children}</SearchClientLayout>
 						</div>
 					</div>
-				</div>
-					
+
 				</main>
 			</body>
 		</html>
