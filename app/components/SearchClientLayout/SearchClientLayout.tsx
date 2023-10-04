@@ -1,32 +1,50 @@
 "use client";
-import React, { useContext, createContext, useState } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react';
 
-import {useRouter} from 'next/navigation';
+import {usePathname} from 'next/navigation';
 import SearchBar from "../SearchBar/SearchBar";
 import RegularGallery from '../RegularGallery/RegularGallery';
 
 import DataJSON from '../../../data.json';
 
-const DataContext = createContext(DataJSON);
+export const DataContext = createContext({
+    data: [...DataJSON]
+});
+export const useDataContext = () => useContext(DataContext);
 
 export function SearchClientLayout({ children }) {
 
     const [searchValue, setSearchValue] = useState('');
 	const [searchData, setSearchData] = useState([]);
-    const [data, setData] = useState(DataJSON);
+    const [ourData, setOurData] = useState(DataJSON);
+    const [searchPlaceholder, setSearchPlaceholder] = useState('Search for movies or TV series');
+    
+    const usePathUrl = usePathname();
+    
+    useEffect(() => {
+        switch (usePathUrl) {
+            case '/':
+                setOurData(DataJSON);
+                setSearchPlaceholder('Search for movies or TV series');
+                break;
+            case '/Movies':
+                setOurData(DataJSON.filter((item) => item.category == 'Movie'));
+                setSearchPlaceholder('Search for movies');
+                break;
+            case '/TVSeries':
+                setOurData(DataJSON.filter((item) => item.category == 'TV Series'));
+                setSearchPlaceholder('Search for TV series');
+                break;
+            case '/Bookmarked':
+                setOurData(DataJSON.filter((item) => item.isBookmarked));
+                setSearchPlaceholder('Search for Bookmarked Media');
+                break;
+        }
+    }, []);
 
-    let router = useRouter();
-    // switch (router.usePathname) {
-    //     case '/':
-    //         setData(dataJSON);
-    //         break;
-    //     case '/Movies':
-    //         setData(dataJSON.filter((item) => item.type == 'Movie'));
-    //     case '/TVSeries':
-    //         setData(dataJSON.filter((item) => item.type == 'TV Series'));
-    //     case '/Bookmarked':
-    //         setData(dataJSON.filter((item) => item.isBookmarked));
-    // }
+    const getData = () => {
+        return ourData;
+    }
 
     const handleSearchBar = (value) => {
         console.log(value);
@@ -48,10 +66,10 @@ export function SearchClientLayout({ children }) {
 	return (
 		<div className="flex-col w-full">
             <div className="h-fit py-4">
-                <SearchBar handleSearch={handleSearchBar} />
+                <SearchBar handleSearch={handleSearchBar} searchPlaceholder={searchPlaceholder}/>
             </div>
             <div>
-                <DataContext.Provider value={{data}}>
+                <DataContext.Provider value={{data: getData()}}>
                     {searchValue == '' ? children : searchResults()}
                 </DataContext.Provider>
                 
@@ -59,5 +77,3 @@ export function SearchClientLayout({ children }) {
         </div>
 	)
 }
-
-export const useDataContext = () => { useContext(DataContext) }

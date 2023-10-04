@@ -16,7 +16,7 @@ export default function Tile({
             <div data-trending="true" className="tile-wrapper relative text-white rounded-md">
                 <img className="h-full absolute" src={thumbnail?.large} alt="Movie Poster" />
                 <div className="gradient h-full w-full absolute top-0 left-0"></div>
-                <div className="bookmark-wrapper m-4 p-2 rounded-full absolute top-0 right-0">
+                <div className="bookmark-wrapper m-3 p-2 rounded-full absolute top-0 right-0">
                     <img className="bookmark flex" src={isBookmarked ? BookmarkFilled.src : Bookmark.src} alt="Bookmark" />
                 </div>
                 <div className="tile-content absolute bottom-0 mb-4 ml-4">
@@ -44,7 +44,7 @@ export default function Tile({
             <div data-trending="false" className="tile-wrapper relative text-white rounded-md flex-col w-full">
                 <div className="mb-2 thumbnail overflow-hidden rounded-md relative w-full">
                     <img className="absolute movie-poster" src={thumbnail?.large} alt="Movie Poster" />
-                    <div className="bookmark-wrapper m-4 p-2 rounded-full absolute top-0 right-0">
+                    <div className="bookmark-wrapper m-3 p-2 rounded-full absolute top-0 right-0">
                         <img className="bookmark flex" src={isBookmarked ? BookmarkFilled.src : Bookmark.src} alt="Bookmark" />
                     </div>
                 </div>

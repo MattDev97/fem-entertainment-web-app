@@ -8,17 +8,16 @@ export default function RegularGallery({data}) {
 				{
 					data.map((item, index) => {
 						return (
-							<div className="">
-								<Tile
-									title={item.title}
-									year={item.year}
-									category={item.category}
-									rating={item.rating}
-									thumbnail={item.thumbnail.regular}
-									isBookmarked={item.isBookmarked}
-									isTrending={false}
-								/>
-							</div>
+							<Tile
+								
+								title={item.title}
+								year={item.year}
+								category={item.category}
+								rating={item.rating}
+								thumbnail={item.thumbnail.regular}
+								isBookmarked={item.isBookmarked}
+								isTrending={false}
+							/>
 							
 						)
 					})
