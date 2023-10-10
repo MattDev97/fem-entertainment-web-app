@@ -9,7 +9,7 @@ export default function RegularGallery({data}) {
 					data.map((item, index) => {
 						return (
 							<Tile
-								
+								key={item.title + index}
 								title={item.title}
 								year={item.year}
 								category={item.category}
