@@ -27,7 +27,7 @@ export default function Home() {
 									year={item.year}
 									category={item.category}
 									rating={item.rating}
-									thumbnail={item.thumbnail.trending}
+									thumbnail={item.thumbnail?.trending || { large: '' }}
 									isBookmarked={item.isBookmarked}
 									isTrending={item.isTrending}
 								/>

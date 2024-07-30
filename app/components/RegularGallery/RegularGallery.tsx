@@ -2,11 +2,11 @@ import './RegularGallery.css';
 
 import Tile from "../Tile/Tile";
 
-export default function RegularGallery({data}) {
+export default function RegularGallery({data}: {data: any}) {
 	return (
 		<div className="regular-gallery grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mb-5">
 				{
-					data.map((item, index) => {
+					data.map((item: any, index: number) => {
 						return (
 							<Tile
 								key={item.title + index}
@@ -18,7 +18,6 @@ export default function RegularGallery({data}) {
 								isBookmarked={item.isBookmarked}
 								isTrending={false}
 							/>
-							
 						)
 					})
 				}

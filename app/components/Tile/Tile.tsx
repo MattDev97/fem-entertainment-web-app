@@ -4,14 +4,22 @@ import Bookmark from '../../assets/icon-bookmark-empty.svg';
 import PlayButton from '../../assets/icon-play.svg';
 
 export default function Tile({
-    title,
-    year,
-    thumbnail,
-    category,
-    rating,
-    isBookmarked,
-    isTrending
-  }) {
+		title,
+		year,
+		thumbnail,
+		category,
+		rating,
+		isBookmarked,
+		isTrending
+	}: {
+		title: string,
+		year: number,
+		thumbnail: { large: string },
+		category: string,
+		rating: string,
+		isBookmarked: boolean,
+		isTrending: boolean
+	}) {
     const playButton = () => {
         return (
             <div className="hover-overlay absolute top-0 left-0 w-full h-full">

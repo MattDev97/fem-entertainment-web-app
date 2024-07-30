@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import './SearchBar.css';
 import SearchIcon from '../../assets/icon-search.svg';
 
-export default function SearchBar({handleSearch, searchPlaceholder}) {
+export default function SearchBar({handleSearch, searchPlaceholder}: {handleSearch: any, searchPlaceholder: any}) {
     const [inputActive, setInputActive] = useState(false);
     const [value, setValue] = useState('');
     
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: any) => {
         if (e.key === 'Enter') {
             setValue(e?.target?.value);
             handleSearch(e?.target?.value);

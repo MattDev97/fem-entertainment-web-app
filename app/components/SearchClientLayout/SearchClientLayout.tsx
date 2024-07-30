@@ -12,31 +12,52 @@ export const DataContext = createContext({
 });
 export const useDataContext = () => useContext(DataContext);
 
-export function SearchClientLayout({ children }) {
+interface MovieData {
+	title: string;
+	thumbnail: {
+			trending: {
+			small: string;
+			large: string;
+		};
+			regular: {
+			small: string;
+			medium: string;
+			large: string;
+		};
+	};
+	year: number;
+	category: string;
+	rating: number;
+	isBookmarked: boolean;
+	isTrending: boolean;
+}
 
-    const [searchValue, setSearchValue] = useState('');
-	const [searchData, setSearchData] = useState([]);
-    const [ourData, setOurData] = useState(DataJSON);
-    const [searchPlaceholder, setSearchPlaceholder] = useState('Search for movies or TV series');
-    
-    const usePathUrl = usePathname();
+export function SearchClientLayout({ children }: { children: any }) {
+	const moviesData: MovieData[] = DataJSON as unknown as MovieData[];
+
+	const [searchValue, setSearchValue] = useState('');
+	const [searchData, setSearchData] = useState<MovieData[]>([]);
+	const [ourData, setOurData] = useState<MovieData[]>([]);
+	const [searchPlaceholder, setSearchPlaceholder] = useState('Search for movies or TV series');
+
+	const usePathUrl = usePathname();
     
     useEffect(() => {
         switch (usePathUrl) {
             case '/':
-                setOurData(DataJSON);
+                setOurData(moviesData);
                 setSearchPlaceholder('Search for movies or TV series');
                 break;
             case '/Movies':
-                setOurData(DataJSON.filter((item) => item.category == 'Movie'));
+                setOurData(moviesData.filter((item) => item.category == 'Movie'));
                 setSearchPlaceholder('Search for movies');
                 break;
             case '/TVSeries':
-                setOurData(DataJSON.filter((item) => item.category == 'TV Series'));
+                setOurData(moviesData.filter((item) => item.category == 'TV Series'));
                 setSearchPlaceholder('Search for TV series');
                 break;
             case '/Bookmarked':
-                setOurData(DataJSON.filter((item) => item.isBookmarked));
+                setOurData(moviesData.filter((item) => item.isBookmarked));
                 setSearchPlaceholder('Search for Bookmarked Media');
                 break;
         }
@@ -46,18 +67,18 @@ export function SearchClientLayout({ children }) {
         return ourData;
     }
 
-    const handleSearchBar = (value) => {
-        console.log(value);
-        setSearchValue(value);
+	const handleSearchBar = (value: string) => {
+		console.log(value);
+		setSearchValue(value);
 
-        const filteredData = DataJSON.filter((item) => item.title.toLowerCase().includes(value.toLowerCase()));
+		const filteredData = moviesData.filter((item) => item.title.toLowerCase().includes(value.toLowerCase()));
 		setSearchData([...filteredData]);
-    }
+	}
 
     const searchResults = () => {
 		return (
 			<div>
-				<div className="text-lg mb-3 text-white">Found {searchData.length} {searchData.length == 1 ? 'result' : 'results'} for '{searchValue}'</div>
+				<div className="text-lg mb-3 text-white">Found {searchData.length} {searchData.length == 1 ? 'result' : 'results'} for &apos;{searchValue}&apos;</div>
 				<RegularGallery data={searchData} />
 			</div>
 		)
@@ -69,9 +90,9 @@ export function SearchClientLayout({ children }) {
                 <SearchBar handleSearch={handleSearchBar} searchPlaceholder={searchPlaceholder}/>
             </div>
             <div>
-                <DataContext.Provider value={{data: getData()}}>
+                {/* <DataContext.Provider value={{data: moviesData as MovieData[] }}>
                     {searchValue == '' ? children : searchResults()}
-                </DataContext.Provider>
+                </DataContext.Provider> */}
                 
             </div>
         </div>
